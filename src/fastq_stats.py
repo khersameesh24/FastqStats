@@ -1,6 +1,6 @@
-from src.fastq_reader import read_fastq
-from src.utils.track_process import track
-from src.fastq_obj import FastqObj
+from fastq_reader import read_fastq
+from utils.track_process import track
+from fastq_obj import FastqObj
 
 
 class FastqStats():
@@ -8,6 +8,16 @@ class FastqStats():
     num_seq = 0
     num_bases = 0
     num_quality_values = 0
+
+    @classmethod
+    def display_stats(cls, seq_counts = True, nuc_counts = True):
+        if seq_counts:
+            print("Total Number of Sequences: ", cls.num_seq)
+        
+        if nuc_counts:
+            print("Total Number of bases: ", cls.num_bases)
+
+
 
     @classmethod
     def get_num_seq(cls, sequence: FastqObj):
@@ -41,18 +51,15 @@ class FastqStats():
 
     @classmethod
     @track
-    def get_fastq_stats(cls, filepath: str):
+    def get_fastq_stats(cls, filepath: str, seq_counts = True, nuc_counts = True):
         """
         Generate fastq stats
         """
         sequences = read_fastq(filepath)
         for sequence in sequences:
-            cls.get_num_seq(sequence)
-            cls.get_num_bases(sequence)
-            cls.get_num_quality_values(sequence)
+            if seq_counts:
+                cls.get_num_seq(sequence)
+            if nuc_counts:
+                cls.get_num_bases(sequence)
 
-        print("Total Number of Sequences: ", cls.num_seq)
-        print("Total Number of bases: ", cls.num_bases)
-        print("Total Number of Quality Values", cls.num_quality_values)
-
-        return cls.get_num_seq, cls.num_bases, cls.num_quality_values
+        cls.display_stats(seq_counts, nuc_counts)

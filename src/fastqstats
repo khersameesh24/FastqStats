@@ -1,0 +1,55 @@
+#!/usr/bin/env python3
+
+from fastq_stats import FastqStats
+import argparse
+import sys
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(
+        description='Generate Stats from a fastq file.'
+    )
+    requiredNamed = parser.add_argument_group('Required arguments')
+    requiredNamed.add_argument(
+        '-i', '--input', help='Input fastq file path', required=True
+    )
+
+    optionalNamed = parser.add_argument_group('Optional arguments')
+    optionalNamed.add_argument(
+        '-n', '--seq-count', help='Get the the total number of sequences in the fastq file', required=False,
+        action='store_true'
+    )
+    optionalNamed.add_argument(
+        '-b', '--nuc-count', help='Get the total number of bases in the fastq file', required=False,
+        action='store_true'
+    )
+
+    args = parser.parse_args()
+
+    if not args.input:
+        print("No input fastq file provided.")
+        parser.print_help()
+        sys.exit(1)
+
+    # if stats not specified return both
+    if not args.seq_count and not args.nuc_count:
+        print("No stat requested, please specify which stat to generate.")
+        parser.print_help()
+        sys.exit(1)
+        
+
+    # if both stats are requested
+    if args.seq_count and args.nuc_count:
+        FastqStats.get_fastq_stats(args.input, seq_counts = True, nuc_counts = True)
+
+    # if only seq counts are requested
+    elif args.seq_count:
+        FastqStats.get_fastq_stats(
+            args.input, seq_counts=True, nuc_counts=False)
+
+    # if only nucleotide counts are requested
+    elif args.nuc_count:
+        FastqStats.get_fastq_stats(
+            args.input, seq_counts=False, nuc_counts=True)
+
+    else:
+        print("Check if the argument provided is valid.")

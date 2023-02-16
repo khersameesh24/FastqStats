@@ -7,7 +7,7 @@ Handles different file formats - *.fastq & *.fastq.gz
 import os
 import sys
 import gzip
-from src.fastq_obj import FastqObj
+from fastq_obj import FastqObj
 from typing import Iterator
 
 

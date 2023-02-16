@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from fastq_stats import FastqStats
+from FastqStats.src.fastq_generate_stats import FastqGenerateStats
 import argparse
 import sys
 
@@ -39,16 +39,16 @@ if __name__ == '__main__':
 
     # if both stats are requested
     if args.seq_count and args.nuc_count:
-        FastqStats.get_fastq_stats(args.input, seq_counts = True, nuc_counts = True)
+        FastqGenerateStats.get_fastq_stats(args.input, seq_counts = True, nuc_counts = True)
 
     # if only seq counts are requested
     elif args.seq_count:
-        FastqStats.get_fastq_stats(
+        FastqGenerateStats.get_fastq_stats(
             args.input, seq_counts=True, nuc_counts=False)
 
     # if only nucleotide counts are requested
     elif args.nuc_count:
-        FastqStats.get_fastq_stats(
+        FastqGenerateStats.get_fastq_stats(
             args.input, seq_counts=False, nuc_counts=True)
 
     else:

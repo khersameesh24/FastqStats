@@ -2,12 +2,12 @@ from setuptools import setup
 
 
 setup(
-    name='',
+    name='fastqstats',
     version='1.0',
-    scripts=[''],
+    scripts=['fastqstats'],
     author='',
     description='',
-    packages=['lib.myscript'],
+    packages=['FastqStats.src', 'FastqStats.src.utils'],
     install_requires=[
         'setuptools',
     ],

@@ -1,9 +1,9 @@
-from fastq_reader import read_fastq
-from utils.track_process import track
-from fastq_obj import FastqObj
+from FastqStats.src.fastq_reader import read_fastq
+from FastqStats.src.utils.track_process import track
+from FastqStats.src.fastq_obj import FastqObj
 
 
-class FastqStats():
+class FastqGenerateStats():
 
     num_seq = 0
     num_bases = 0
@@ -11,13 +11,14 @@ class FastqStats():
 
     @classmethod
     def display_stats(cls, seq_counts = True, nuc_counts = True):
+        """
+        Display requested stats on the console
+        """
         if seq_counts:
             print("Total Number of Sequences: ", cls.num_seq)
         
         if nuc_counts:
             print("Total Number of bases: ", cls.num_bases)
-
-
 
     @classmethod
     def get_num_seq(cls, sequence: FastqObj):

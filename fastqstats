@@ -10,7 +10,7 @@ if __name__ == '__main__':
     )
     requiredNamed = parser.add_argument_group('Required arguments')
     requiredNamed.add_argument(
-        '-i', '--input', help='Input fastq file path', required=True
+        '-i', '--input', help='Input fastq file path', required=True, metavar='FASTQ_FILE'
     )
 
     optionalNamed = parser.add_argument_group('Optional arguments')
@@ -27,18 +27,18 @@ if __name__ == '__main__':
 
     if not args.input:
         print("No input fastq file provided.")
-        parser.print_help()
+        parser.print_usage()
         sys.exit(1)
 
     # if stats not specified return both
-    if not args.seq_count and not args.nuc_count:
+    elif not args.seq_count and not args.nuc_count:
         print("No stat requested, please specify which stat to generate.")
-        parser.print_help()
+        parser.print_usage()
         sys.exit(1)
         
 
     # if both stats are requested
-    if args.seq_count and args.nuc_count:
+    elif args.seq_count and args.nuc_count:
         FastqGenerateStats.get_fastq_stats(args.input, seq_counts = True, nuc_counts = True)
 
     # if only seq counts are requested

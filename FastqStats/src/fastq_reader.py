@@ -8,9 +8,11 @@ import os
 import sys
 import gzip
 from FastqStats.src.fastq_obj import FastqObj
+from FastqStats.src.utils.track_process import track
 from typing import Iterator
 
 
+# @track
 def read_fastq(file_path) -> Iterator[str]:
     """
     Read input fastq file path and return a generator
@@ -23,28 +25,24 @@ def read_fastq(file_path) -> Iterator[str]:
         file_ext = os.path.splitext(file_path)[1]
 
         if file_ext == ".gz":
-            f = gzip.open(file_path, 'rt')
+            filehandle = gzip.open(file_path, 'r')
         elif file_ext == ".fastq" or file_ext == ".fq":
-            f = open(file_path, 'rt')
+            filehandle = open(file_path, 'rt')
         else:
-            print("Check if the correct file was passed. Supported formats `.fastq` & `.fastq.gz`")
+            print(
+                "Check if the correct file was passed. Supported formats `.fastq` & `.fastq.gz`")
 
-        while True:
-            # Read one sequence at a time - 4 lines
-            fastq_seq = [f.readline().strip() for i in range(4)]
-
-            if not fastq_seq[0]:
-                break
+        for seq_iden, raw_seq, desc, qual_val in zip(*[filehandle] * 4):
 
             # yield a FastqObj
             yield FastqObj(
-                sequence_identifier=fastq_seq[0],
-                raw_sequence=fastq_seq[1],
-                description=fastq_seq[2],
-                quality_values=fastq_seq[3]
+                sequence_identifier = seq_iden,
+                raw_sequence = raw_seq,
+                description = desc,
+                quality_values = qual_val
             ).get_fastq_obj()
 
-        f.close()
+        filehandle.close()
 
     except FileNotFoundError as err:
         print("Check if the file exists.")

@@ -42,7 +42,7 @@ Required arguments:
 Optional arguments:
   -n, --seq-count       Get the the total number of sequences in
                         the fastq file
-  -b, --nuc-count       Get the total number of bases in the
+  -b, --nuc-count       Get the total number of nucleotides in the
                         fastq file
 
 ```

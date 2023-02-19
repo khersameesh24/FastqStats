@@ -19,7 +19,7 @@ if __name__ == '__main__':
         action='store_true'
     )
     optionalNamed.add_argument(
-        '-b', '--nuc-count', help='Get the total number of bases in the fastq file', required=False,
+        '-b', '--nuc-count', help='Get the total number of nucleotides in the fastq file', required=False,
         action='store_true'
     )
 

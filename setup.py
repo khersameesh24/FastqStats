@@ -8,5 +8,6 @@ setup(
     author='',
     description='',
     packages=['FastqStats.src', 'FastqStats.src.utils'],
-    python_requires='>=3.5'
+    python_requires='>=3.5',
+    install_requires=['psutil']
 )
